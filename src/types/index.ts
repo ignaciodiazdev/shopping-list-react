@@ -9,6 +9,7 @@ export type Product  = {
     unidad: string;
     comprado: boolean;
     createdAt: string;
+    updatedAt: string;
 }
 
-export type ProductForm = Omit<Product, '_id' | 'createdAt' | 'comprado'>
+export type ProductFormValues = Omit<Product, '_id' | 'createdAt' | 'updatedAt' >
