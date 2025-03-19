@@ -40,13 +40,13 @@ export default function ProductItem({
         <div className="flex gap-2">
           {/* Botón para abrir el modal */}
           <button
-            className="text-gray-500 text-xl border w-9 border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-blue-600 cursor-pointer transition-all duration-500"
+            className="text-gray-500 text-xl border w-9 border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-blue-600 cursor-pointer transition-all duration-500 p-2"
             onClick={() => setIsOpen(true)}
           >
             <HiOutlinePencilSquare />
           </button>
           <button
-            className="text-gray-500 text-xl border border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-pink-600 cursor-pointer transition-all duration-500 w-9 flex justify-center items-center"
+            className="text-gray-500 text-xl border border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-pink-600 cursor-pointer transition-all duration-500 w-9 flex justify-center items-center p-2"
             onClick={() => onDelete(producto._id)}
           >
             <BsTrash />
