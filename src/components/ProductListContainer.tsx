@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useProductStore } from "../store/store";
 import ProductItem from "./ProductItem";
 import { ProductFormValues } from "@/types";
 import Swal from "sweetalert2";
 import {
   confirmDeleteConfig,
+  confirmUpdateConfig,
   deleteSuccessConfig,
+  updateSuccessConfig,
 } from "@/utils/sweetAlertConfig";
 
 export default function ProductListContainer() {
@@ -14,25 +16,26 @@ export default function ProductListContainer() {
 
   useEffect(() => {
     cargarProductos(); // Cargar productos al montar el componente
-  }, [cargarProductos]);
+  }, []);
 
-  console.log("hello");
-
-  const handleUpdateProduct = (
-    id: string,
-    updatedProduct: ProductFormValues
-  ) => {
-    actualizarProducto(id, updatedProduct);
-  };
-
-  const handleDeleteProduct = (id: string) => {
-    Swal.fire(confirmDeleteConfig).then((result) => {
+  const handleUpdateProduct = useCallback(
+    async (id: string, updatedProduct: ProductFormValues) => {
+      const result = await Swal.fire(confirmUpdateConfig);
       if (result.isConfirmed) {
-        eliminarProductos(id);
-        Swal.fire(deleteSuccessConfig);
+        await actualizarProducto(id, updatedProduct);
+        await Swal.fire(updateSuccessConfig);
       }
-    });
-  };
+    },
+    []
+  );
+
+  const handleDeleteProduct = useCallback(async (id: string) => {
+    const result = await Swal.fire(confirmDeleteConfig);
+    if (result.isConfirmed) {
+      await eliminarProductos(id);
+      await Swal.fire(deleteSuccessConfig);
+    }
+  }, []);
 
   return (
     <ul className="flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5">

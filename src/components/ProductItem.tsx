@@ -1,11 +1,13 @@
 import { Product, ProductFormValues } from "../types";
 import { BsTrash } from "react-icons/bs";
 import ProductModal from "./ProductModal";
+import { useState } from "react";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 
 type ProductItemProps = {
   producto: Product;
-  onUpdate: (updatedProduct: ProductFormValues) => void;
-  onDelete: (id: string) => void;
+  onUpdate: (updatedProduct: ProductFormValues) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
 };
 
 export default function ProductItem({
@@ -13,11 +15,10 @@ export default function ProductItem({
   onUpdate,
   onDelete,
 }: ProductItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <li
-      key={producto._id}
-      className="p-6 bg-slate-900/70 rounded-xl shadow-xl relative overflow-hidden cursor-pointer hover:scale-105 hover:bg-slate-800 transition-all duration-500 border border-gray-600/40"
-    >
+    <li className="p-6 bg-slate-900/70 rounded-xl shadow-xl relative overflow-hidden cursor-pointer hover:scale-105 hover:bg-slate-800 transition-all duration-500 border border-gray-600/40">
       <div className="w-2 h-full absolute bg-green-700 top-0 left-0"></div>
       <div className="flex items-center justify-between">
         <div>
@@ -37,9 +38,13 @@ export default function ProductItem({
           </div>
         </div>
         <div className="flex gap-2">
-          <div>
-            <ProductModal producto={producto} onUpdate={onUpdate} />
-          </div>
+          {/* Botón para abrir el modal */}
+          <button
+            className="text-gray-500 text-xl border w-9 border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-blue-600 cursor-pointer transition-all duration-500"
+            onClick={() => setIsOpen(true)}
+          >
+            <HiOutlinePencilSquare />
+          </button>
           <button
             className="text-gray-500 text-xl border border-gray-500 rounded-md bg-gray-300/10 hover:border-white hover:text-white hover:bg-pink-600 cursor-pointer transition-all duration-500 w-9 flex justify-center items-center"
             onClick={() => onDelete(producto._id)}
@@ -48,6 +53,17 @@ export default function ProductItem({
           </button>
         </div>
       </div>
+      {/* Modal */}
+      {isOpen && (
+        <ProductModal
+          producto={producto}
+          onUpdate={(updatedProduct) => {
+            onUpdate(updatedProduct);
+            setIsOpen(false);
+          }}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     </li>
   );
 }

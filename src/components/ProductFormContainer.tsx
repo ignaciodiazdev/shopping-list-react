@@ -1,5 +1,5 @@
 import ProductFormManager from "./ProductFormManager";
-import coffeeLogo from "../assets/shop-store.svg";
+import shopStore from "../assets/shop-store.svg";
 import { useProductStore } from "@/store/store";
 import { ProductFormValues } from "@/types";
 
@@ -16,7 +16,7 @@ export default function ProductFormContainer() {
       <div className="flex flex-col md:flex-row mt-4">
         <div className="w-full flex justify-center items-center">
           <img
-            src={coffeeLogo}
+            src={shopStore}
             alt="React logo"
             className="hidden md:flex md:p-5 max-h-[370px] opacity-85"
           />
